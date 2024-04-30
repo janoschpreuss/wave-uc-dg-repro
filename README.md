@@ -31,7 +31,8 @@ distributions the command for the latter is either `sudo systemctl start docker`
 ## Installing in a conda environment
 * Please install `conda` as described in detail [here](https://conda.io/projects/conda/en/latest/user-guide/install/index.html).
 * Then download the file `wave-uc-dg-repro.yml` from `Zenodo` or from this `github` repository.
-* Open a bash shell in the folder that contains this file and execute (in the conda base shell) 
+
+Open a bash shell in the folder that contains this file and execute (in the conda base shell)
 
     conda env create -f wave-uc-dg-repro.yml
     conda activate wave-uc-dg-repro 
