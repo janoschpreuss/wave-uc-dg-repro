@@ -8,7 +8,40 @@ This repository contains software and instructions to reproduce the numerical ex
 # How to run / install
 We describe two options to setup the software for running the experiments.
 
-TODO 
+* downloading a `docker image` from `Zenodo` or `Docker Hub` which contains all dependencies and tools to run the application,
+* or installing the required software in a `conda` environment. 
+
+## Docker image 
+
+### Pulling the docker image from Docker Hub 
+* Please install the `docker` platform for your distribution as described [here](https://docs.docker.com/get-docker/).
+* After installation the `Docker daemon` has to be started. This can either be done on boot or manually. In most Linux 
+distributions the command for the latter is either `sudo systemctl start docker` or `sudo service docker start`.
+* Pull the docker image using the command `docker pull janosch2888/wave-uc-dg-repro:v1`. 
+* Run the image with `sudo docker run -it janosch2888/wave-uc-dg-repro:v1 bash`.
+* Proceed further as described in [How to reproduce](#repro).
+
+### Downloading the docker image from Zenodo
+* For this option the first two steps are the same as above.
+* The image can be downloaded [here]( ). 
+* Assuming that `wave-uc-dg-repro.tar` is the filename of the downloaded image, please load the image with `sudo docker load < wave-uc-dg-repro.tar`.
+* Run the image with `sudo docker run -it janosch2888/wave-uc-dg-repro:v1 bash`.
+* Proceed further as described in [How to reproduce](#repro).
+
+## Installing in a conda environment
+* Please install `conda` as described in detail [here](https://conda.io/projects/conda/en/latest/user-guide/install/index.html).
+* Then download the file `wave-uc-dg-repro.yml` from `Zenodo` or from this `github` repository.
+* Open a bash shell in the folder that contains this file and execute (in the conda base shell) 
+
+    conda env create -f wave-uc-dg-repro.yml
+    conda activate wave-uc-dg-repro 
+
+Then clone the repository 
+
+    git clone https://github.com/janoschpreuss/wave-uc-dg-repro.git
+
+and change into the folder `wave-uc-dg-repro`. Now we can proceed further as described in [How to reproduce](#repro).
+
 
 # <a name="repro"></a> How to reproduce
 The `python` scripts for runnings the numerical experiments are located in the folder `scripts`.
