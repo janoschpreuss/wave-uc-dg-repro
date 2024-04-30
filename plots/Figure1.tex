@@ -1,0 +1,200 @@
+\documentclass{article}
+\usepackage[a4paper,margin=1in,footskip=0.25in]{geometry}
+\usepackage{tikz}
+\usetikzlibrary{spy,shapes,shadows,calc,pgfplots.groupplots}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{stmaryrd}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage{algorithmic}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{pgfplotstable}
+\usepackage{colortbl}
+
+\pgfplotstableset{% global config
+    every head row/.style={before row=\bottomrule,after row=\hline},
+    every last row/.style={after row=\toprule},
+}
+
+\providecommand{\abs}[1]{\left\lvert#1\right\rvert}
+\providecommand{\norm}[1]{\left\lVert#1\right\rVert}
+
+\newcommand{\drawSquare}{\begin{tikzpicture}
+\node[ ] at (0,0) {\textcolor{blue}{\nullfont\pgfuseplotmark{square}}};
+\end{tikzpicture} }
+\newcommand{\drawCircle}{
+\begin{tikzpicture}
+\node[ ] at (0,0) {\textcolor{red}{\nullfont\pgfuseplotmark{o}}};
+\end{tikzpicture} }
+\newcommand{\drawTriangle}{\begin{tikzpicture}
+\node[ ] at (0,0) {\textcolor{green!70!black}{\nullfont\pgfuseplotmark{triangle}}};
+\end{tikzpicture}
+}
+\begin{document}
+
+\begin{figure}[h]
+%\parbox{0.6\textwidth}{
+\begin{minipage}[c]{0.645\textwidth}%
+	%\centering
+\begin{footnotesize}
+\begin{center}
+$q=k=1$
+\end{center}
+\pgfplotstabletypeset[
+    columns={N,ndof,vanilla,block,MTM-lo,DFB,MTM-full},
+    %columns/N/.style={  column name={$N$} },
+    columns/N/.style={  column name={$N$}, column type/.add={>{ \columncolor[gray]{.9} }}{}  },
+    columns/ndof/.style={  column name={ndof}, column type/.add={>{ \columncolor[gray]{.9} }}{}    },
+    columns/vanilla/.style={  column name={NoPre}, string replace={3000}{},empty cells with={-},  },
+    columns/block/.style={  column name={Block}, string replace={3000}{},empty cells with={-},   },
+    columns/MTM-lo/.style={  column name={\textcolor{blue}{M-l} \drawSquare}, string replace={3000}{},empty cells with={-}  },
+	columns/DFB/.style={  column name={\textcolor{red}{DFB}\drawCircle}, string replace={3000}{},empty cells with={-}  }, 
+    columns/MTM-full/.style={  column name={\textcolor{green!70!black}{M-f} \drawTriangle}, string replace={3000}{},empty cells with={-}  },
+    ] {../data/precond-1d-iters-order1.dat}
+   %}
+\end{footnotesize}
+\end{minipage}
+\begin{minipage}[l]{0.325\textwidth}%
+%\begin{center}
+%\hspace*{1em}
+%\begin{small}
+\begin{tikzpicture}[scale = 1.0]
+\begin{axis}[
+   height = 4.25cm,
+   width = 5.5cm,
+   every axis plot/.append style={thick},
+   axis y line*=left,
+   %legend pos = south east, 
+   label style={font=\tiny},
+   tick label style={font=\tiny}, 
+   ymode=log,
+   xmode=log,
+   %xmin=0,xmax=1.6e4,
+   ytick={1e0,1e-1},
+   %ymax = 1e-0,
+   %ymax = 350, 
+   xlabel= { \small{ $\Delta t$}  },
+   y tick label style={ xshift=2.0em,yshift=-0.4em },
+   x tick label style={ xshift=1.2em,yshift=1.1em },
+   x label style={at={(axis description cs:0.35,+0.25)},anchor=east}, 
+	title = {  \footnotesize{ $\norm{\partial_t \tilde{e}_h }_{L^{2}(0,T;L^2(\Omega))}$}    },
+    legend style={at={(0.75, 0.4)},anchor=north},
+    title style={at={(0.55,0.935)},anchor=north},
+   ]
+   \addplot[red,very thick,mark=o,forget plot]
+        table[x=deltat,y=DFB] {../data/precond-1d-L2L2ut-order1.dat}; %\addlegendentry{DFB}%
+   \addplot[blue,very thick,mark=square,forget plot]
+        table[x=deltat,y=MTM-lo] {../data/precond-1d-L2L2ut-order1.dat};  %\addlegendentry{MTM-l}%
+   \addplot[green!70!black,very thick,mark=triangle,forget plot]
+        table[x=deltat,y=MTM-full] {../data/precond-1d-L2L2ut-order1.dat};  %\addlegendentry{MTM-f}%
+   \addplot[lightgray,dashed,ultra thick]
+        table[mark=none,x=deltat,y expr ={.75*\thisrowno{0}}] {../data/precond-1d-L2L2ut-order1.dat};  %
+	\legend{\footnotesize{ $ \mathcal{O}(\Delta t) $ }}
+ \end{axis}
+\end{tikzpicture}
+%\end{small}
+%\includegraphics[width=.5\textwidth]{../../plots/GCC-1D-Linfty-L2-u-fb.pdf}
+%\end{center}
+\end{minipage}
+\vspace*{.75em}
+\begin{minipage}[c]{0.385\textwidth}%
+\begin{footnotesize}
+\begin{center}
+$q=k=2$
+\end{center}
+\pgfplotstabletypeset[
+    columns={N,ndof,MTM-lo,DFB,MTM-full},
+    %columns/N/.style={  column name={$N$} },
+    columns/N/.style={  column name={$N$}, column type/.add={>{ \columncolor[gray]{.9} }}{}  },
+    columns/ndof/.style={  column name={ndof}, column type/.add={>{ \columncolor[gray]{.9} }}{}    },
+    columns/MTM-lo/.style={  column name={\textcolor{blue}{M-l}}, string replace={3000}{},empty cells with={-}  },
+    columns/DFB/.style={  column name={\textcolor{red}{DFB}}, string replace={3000}{},empty cells with={-}  }, 
+    columns/MTM-full/.style={  column name={\textcolor{green!70!black}{M-f}}, string replace={3000}{},empty cells with={-}  },
+    ] {../data/precond-1d-iters-order2.dat}
+   %}
+\end{footnotesize}
+\end{minipage}
+\begin{minipage}[l]{0.615\textwidth}%
+ \vspace*{.75em}
+%\hspace{-1.35em}
+\begin{tikzpicture}[scale = 1.0]
+\begin{groupplot}[
+    group style={
+        group size=2 by 1,
+        horizontal sep=4.0pt,
+        vertical sep=40pt,
+   },
+   label style={font=\tiny},
+   tick label style={font=\tiny}, 
+   height = 4.25cm,
+   width = 5.0cm,
+   every axis plot/.append style={thick},
+   axis y line*=left,
+   ]
+  \nextgroupplot[
+  ymode = log,	 
+   xlabel= { iter  },
+   y tick label style={ xshift=0.25em,yshift=-0.4em },
+   x tick label style={ xshift=-0.1em,yshift=-0.2em }, 
+   ytick = {1e7,1e3,1e-1,1e-5 },
+   x label style={at={(axis description cs:0.525,+0.25)},anchor=east}, 
+   title = {\footnotesize{ Residual} },
+   legend style={at={(0.6, 0.8)},anchor=north},
+   title style={at={(0.55,0.935)},anchor=north},
+   xmax = 177,
+  ]	
+  %\addplot[red,only marks, mark = diamond,mark options={scale=0.5},each nth point=4 ]
+  %      table[x=iter,y=res] {precond-1d-DFB-order2-residuals-ref-lvl2.dat}; %\addlegendentry{DFB}%
+  \addplot[red,only marks, mark =*,mark options={scale=0.5},each nth point=4 ]
+        table[x=iter,y=res] {../data/precond-1d-DFB-order2-residuals-ref-lvl3.dat}; %\addlegendentry{DFB}%
+  \addplot[ red,only marks, mark =o,mark options={scale=0.7},each nth point=4 ]
+        table[x=iter,y=res] {../data/precond-1d-DFB-order2-residuals-ref-lvl4.dat}; %\addlegendentry{DFB}%
+
+  %\addplot[ blue,only marks, mark = diamond,mark options={scale=0.7},forget plot,each nth point=4  ]
+  %      table[x=iter,y=res] {precond-1d-MTM-lo-order2-residuals-ref-lvl2.dat}; %\addlegendentry{DFB}%
+  \addplot[ blue,only marks, mark = square*,mark options={scale=0.7},forget plot,each nth point=4  ]
+        table[x=iter,y=res] {../data/precond-1d-MTM-lo-order2-residuals-ref-lvl3.dat}; %\addlegendentry{DFB}%
+  \addplot[ blue,only marks, mark =square,mark options={scale=0.7},forget plot,each nth point=4  ]
+        table[x=iter,y=res] {../data/precond-1d-MTM-lo-order2-residuals-ref-lvl4.dat}; %\addlegendentry{DFB}%
+	\legend{  \tiny{ $N=8$}, \tiny{$N=16$} }
+ 
+  \nextgroupplot[ 
+   ymode=log,
+   xmode=log,
+   %xmin=0,xmax=1.6e4,
+   xtick = {1e-1},
+   ytick={1e-1,1e-2},
+   axis y line*=left,
+   %ymax = 1e-0,
+   %ymax = 350, 
+   xlabel= { \footnotesize{ $\Delta t$}  },
+   y tick label style={ xshift=-0.1em,yshift= 0.0em },
+   x tick label style={ xshift=-0.7em,yshift=1.4em },
+   x label style={at={(axis description cs:0.75,0.1)},anchor=east}, 
+	title = {  \footnotesize{ $\norm{\partial_t \tilde{e}_h }_{L^{2}(0,T;L^2(\Omega))}$}    },
+    legend style={at={(0.35, 0.75)},anchor=north},
+    title style={at={(0.45,0.935)},anchor=north},
+  ]
+   \addplot[blue,very thick,mark=square,forget plot]
+        table[x=deltat,y=MTM-lo] {../data/precond-1d-L2L2ut-order2.dat};  %\addlegendentry{MTM-l}%
+   \addplot[green!70!black,very thick,mark=triangle,forget plot]
+        table[x=deltat,y=MTM-full] {../data/precond-1d-L2L2ut-order2.dat};  %\addlegendentry{MTM-f}%
+   \addplot[red,very thick,mark=o,forget plot]
+        table[x=deltat,y=DFB] {../data/precond-1d-L2L2ut-order2.dat}; %\addlegendentry{DFB}%
+   \addplot[lightgray,dashed,ultra thick]
+        table[mark=none,x=deltat,y expr ={.75*\thisrowno{0}*\thisrowno{0}}] {../data/precond-1d-L2L2ut-order2.dat};  %
+	\legend{\tiny{ $ \mathcal{O}(\Delta t^2) $ }}
+\end{groupplot}
+\end{tikzpicture}
+
+\end{minipage}
+%\caption{  }
+\label{fig:pre-1d}
+\end{figure}
+
+
+\end{document}
+

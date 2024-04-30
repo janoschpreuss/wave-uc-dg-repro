@@ -1,0 +1,101 @@
+\documentclass{article}
+\usepackage[a4paper,margin=1in,footskip=0.25in]{geometry}
+\usepackage{tikz}
+\usetikzlibrary{spy,shapes,shadows,calc,pgfplots.groupplots}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{stmaryrd}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage{algorithmic}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{pgfplotstable}
+\usepackage{colortbl}
+
+\pgfplotstableset{% global config
+    every head row/.style={before row=\bottomrule,after row=\hline},
+    every last row/.style={after row=\toprule},
+}
+
+\providecommand{\abs}[1]{\left\lvert#1\right\rvert}
+\providecommand{\norm}[1]{\left\lVert#1\right\rVert}
+
+\newcommand{\drawSquare}{\begin{tikzpicture}
+\node[ ] at (0,0) {\textcolor{blue}{\nullfont\pgfuseplotmark{square}}};
+\end{tikzpicture} }
+\newcommand{\drawCircle}{
+\begin{tikzpicture}
+\node[ ] at (0,0) {\textcolor{red}{\nullfont\pgfuseplotmark{o}}};
+\end{tikzpicture} }
+\newcommand{\drawTriangle}{\begin{tikzpicture}
+\node[ ] at (0,0) {\textcolor{green!70!black}{\nullfont\pgfuseplotmark{triangle}}};
+\end{tikzpicture}
+}
+\begin{document}
+
+\begin{table}[h]
+\begin{center}
+$q=k=1$ \\
+\pgfplotstabletypeset[ 
+    every head row/.style={
+    before row={
+    \bottomrule
+    	& \multicolumn{3}{c}{\textcolor{red}{DFB}} & \multicolumn{3}{c}{\textcolor{blue}{M-l}}\\
+	},
+	after row=\toprule,
+    },
+    columns={N,ndof-tot-DFB,ndof-inv-DFB,DFB-iter,ndof-tot-MTM-lo,ndof-inv-MTM-lo,MTM-lo-iter},
+    columns/N/.style={  column name={$N$}, column type/.add={>{ \columncolor[gray]{.9} }}{}  },
+    columns/ndof-tot-DFB/.style={  column name={ndof-tot}    },
+    columns/ndof-inv-DFB/.style={  column name={ndof-inv}    },
+    columns/DFB-iter/.style={  column name={iter} },
+    columns/ndof-tot-MTM-lo/.style={  column name={ndof-tot}    },
+    columns/ndof-inv-MTM-lo/.style={  column name={ndof-inv}    },
+    columns/MTM-lo-iter/.style={  column name={iter} },
+    ] {../data/precond-3d-GCC-iters-order1.dat}
+\\
+$q=k=2$ \\
+\pgfplotstabletypeset[ 
+    every head row/.style={
+    before row={
+    \bottomrule
+    	& \multicolumn{3}{c}{\textcolor{red}{DFB}} & \multicolumn{3}{c}{\textcolor{blue}{M-l}}\\
+	},
+	after row=\toprule,
+    },
+    columns={N,ndof-tot-DFB,ndof-inv-DFB,DFB-iter,ndof-tot-MTM-lo,ndof-inv-MTM-lo,MTM-lo-iter},
+    columns/N/.style={  column name={$N$}, column type/.add={>{ \columncolor[gray]{.9} }}{}  },
+    columns/ndof-tot-DFB/.style={  column name={ndof-tot}    },
+    columns/ndof-inv-DFB/.style={  column name={ndof-inv}    },
+    columns/DFB-iter/.style={  column name={iter} },
+    columns/ndof-tot-MTM-lo/.style={  column name={ndof-tot}    },
+    columns/ndof-inv-MTM-lo/.style={  column name={ndof-inv}    },
+    columns/MTM-lo-iter/.style={  column name={iter} },
+    ] {../data/precond-3d-GCC-iters-order2.dat}
+\\
+$q=k=3$ \\
+\pgfplotstabletypeset[ 
+    every head row/.style={
+    before row={
+    \bottomrule
+    	& \multicolumn{3}{c}{\textcolor{red}{DFB}} & \multicolumn{3}{c}{\textcolor{blue}{M-l}}\\
+	},
+	after row=\toprule,
+    },
+    columns={N,ndof-tot-DFB,ndof-inv-DFB,DFB-iter,ndof-tot-MTM-lo,ndof-inv-MTM-lo,MTM-lo-iter},
+    columns/N/.style={  column name={$N$}, column type/.add={>{ \columncolor[gray]{.9} }}{}  },
+    columns/ndof-tot-DFB/.style={  column name={ndof-tot}    },
+    columns/ndof-inv-DFB/.style={  column name={ndof-inv}    },
+    columns/DFB-iter/.style={  column name={iter} },
+    columns/ndof-tot-MTM-lo/.style={  column name={ndof-tot}    },
+    columns/ndof-inv-MTM-lo/.style={  column name={ndof-inv}    },
+    columns/MTM-lo-iter/.style={  column name={iter} },
+    ] {../data/precond-3d-GCC-iters-order3.dat}
+\end{center}
+\label{tab:iter-3D-GCC}
+\end{table}
+
+\end{document}
+
