@@ -11,6 +11,10 @@ We describe two options to setup the software for running the experiments.
 * downloading a `docker image` from `Zenodo` or `Docker Hub` which contains all dependencies and tools to run the application,
 * or installing the required software in a `conda` environment. 
 
+The first option is very convenient on personal machines whereas the second option may be more suited for compute clusters on 
+which one does not have admin rights. In fact, the 1D results shown in the article have obtained using the Docker image 
+whereas the 3D results were obtained with the conda installation on a compute machine.
+
 ## Docker image 
 
 ### Pulling the docker image from Docker Hub 
@@ -23,7 +27,7 @@ distributions the command for the latter is either `sudo systemctl start docker`
 
 ### Downloading the docker image from Zenodo
 * For this option the first two steps are the same as above.
-* The image can be downloaded [here]( ). 
+* The image can be downloaded zenodo. 
 * Assuming that `wave-uc-dg-repro.tar` is the filename of the downloaded image, please load the image with `sudo docker load < wave-uc-dg-repro.tar`.
 * Run the image with `sudo docker run -it janosch2888/wave-uc-dg-repro:v1 bash`.
 * Proceed further as described in [How to reproduce](#repro).
@@ -49,7 +53,6 @@ The `python` scripts for runnings the numerical experiments are located in the f
 To run an experiment we change to this folder and run the corresponding file.
 After execution has finished the produced data will be available in the folder `data`.
 For the purpose of comparison, the folder `data_ref` contains a copy of the data which has been used for the plots in the paper.
-
 
 To generate the plots as shown in the article from the data just produced we change to the folder `plots`
 and compile the corresponding `latex` file.
