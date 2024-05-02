@@ -27,7 +27,7 @@ distributions the command for the latter is either `sudo systemctl start docker`
 
 ### Downloading the docker image from Zenodo
 * For this option the first two steps are the same as above.
-* The image can be downloaded zenodo. 
+* The image can be downloaded from zenodo. 
 * Assuming that `wave-uc-dg-repro.tar` is the filename of the downloaded image, please load the image with `sudo docker load < wave-uc-dg-repro.tar`.
 * Run the image with `sudo docker run -it janosch2888/wave-uc-dg-repro:v1 bash`.
 * Proceed further as described in [How to reproduce](#repro).
